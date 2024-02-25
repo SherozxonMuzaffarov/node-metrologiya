@@ -1,29 +1,31 @@
 require('dotenv').config();
 const express = require("express");
-const initializeDatabase = require('./config/db')
+const dbConnect = require('./config/db')
 const cors = require('cors')
+const cookieParser = require('cookie-parser')
 
 const app = express();
+dbConnect()
 app.use(cors({ origin: '*', methods: 'GET, PUT, PATCH, POST, DELETE' }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use('/uploads', express.static('uploads'));
+app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.json("HEllo wordl")
-})
+
 
 //Import and use routes
 const authRoutes = require('./src/routes/authRoutes')
-const depoRoutes = require('./src/routes/depoRoutes')
-const regionRoutes = require('./src/routes/regionRoutes')
-const userRoutes = require('./src/routes/userRoutes')
+// const depoRoutes = require('./src/routes/depoRoutes')
+// const regionRoutes = require('./src/routes/regionRoutes')
+// const userRoutes = require('./src/routes/userRoutes')
+// const metrologyRoutes = require('./src/routes/metrologyRoute')
 
 
 app.use('/auth', authRoutes)
-app.use('/depo', depoRoutes)
-app.use('/region', regionRoutes)
-app.use('/user', userRoutes)
+// app.use('/depo', depoRoutes)
+// app.use('/region', regionRoutes)
+// app.use('/user', userRoutes)
+// app.use('/metrologiya', metrologyRoutes)
 
 app.use((req, res, next) => {
   res.setHeader(
@@ -35,14 +37,9 @@ app.use((req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
   
-const startServer = async () => {
 
-  await initializeDatabase()
 
-  app.listen(PORT, async () => {
-    console.log(`Server is running on port ${PORT}`);
-  });
-};
 
-// Start your server
-startServer();
+ app.listen(PORT, async () => {
+   console.log(`Server is running on port ${PORT}`);
+ });

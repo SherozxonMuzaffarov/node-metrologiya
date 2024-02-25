@@ -3,7 +3,8 @@ const { Metrology } = require ('../../models')
 module.exports = {
     getAll: async (req, res) => {
         try {
-            let model = await Metrology.findAll({});
+            let model = await Metrology.findAll();
+
             res.send(model)
         } catch (error) {
             console.error(error);
@@ -32,11 +33,7 @@ module.exports = {
 
     create: async (req, res) => {
         try {
-            let { name } = req.body;
-
-            console.log("BAckend **** " + req);
-
-            let model = await Metrology.create({ name })
+            let model = await Metrology.create(req.body)
 
             res.json(model)
         } catch (error) {

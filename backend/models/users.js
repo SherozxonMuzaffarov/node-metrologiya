@@ -1,61 +1,32 @@
-'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      User.belongsTo(models.Depo, {
-        foreignKey: 'depo_id',
-        as: 'depo'
-      })
-    }
+const mongoose = require('mongoose');
+
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    maxLength: 250
+  },
+  phone_number: {
+    type: String,
+    unique: true,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  depo_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Depo'
+  },
+  role: {
+    type: String,
+    enum: ['Admin', 'User'],
+    required: true,
+    default: 'User'
   }
-  User.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
-    name: {
-      type: DataTypes.STRING(250),
-      allowNull: false,
-    },
-    phone_number: {
-      type: DataTypes.STRING(250),
-      unique: true,
-      allowNull: false
-    },
-    password: {
-      type: DataTypes.STRING(250),
-      allowNull: false
-    },
-    depo_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    role: {
-      type: DataTypes.ENUM("Admin", 'User', ""),
-      allowNull: false,
-      defaultValue: "User"
-    },
-  }, {
-    sequelize,
-    modelName: 'User',
-    timestamps: true,
-    indexes: [
-      {
-        name: 'PRIMARY',
-        unique: true,
-        using: 'BTREE',
-        fields:[{ name: 'id'}]
-      },
-      {
-        name: 'phone_number',
-        unique: true,
-        using: 'BTREE',
-        fields:[{ name: 'phone_number'}]
-      },
-    ]
-  });
-  return User;
-};
+}, {
+  timestamps: true
+});
+
+module.exports = mongoose.model('User', userSchema);

@@ -1,54 +1,43 @@
-'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Metrology_sklad extends Model {
-    static associate(models) {
-      
-    }
+const mongoose = require('mongoose');
+
+const metrologySkladSchema = new mongoose.Schema({
+  nomi: {
+    type: String,
+    required: true
+  },
+  soni: {
+    type: Number,
+    required: true
+  },
+  ishlabChiqarilganYili: {
+    type: Number,
+    required: true
+  },
+  raqami: {
+    type: String,
+    required: true
+  },
+  turi: {
+    type: String,
+    required: true
+  },
+  ishi: {
+    type: String,
+    required: true
+  },
+  izoh: {
+    type: String,
+    required: true
+  },
+  depo_id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Depo',
+    required: true
   }
-  Metrology_sklad.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER,
-    },
-    nomi: {
-      type: DataTypes.STRING(250),
-      allowNull: false,
-    },
-    soni: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    ishlabChiqarilganYili: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    raqami: {
-      type: DataTypes.STRING(250),
-      allowNull: false,
-    },
-    turi: {
-      type: DataTypes.STRING(250),
-      allowNull: false,
-    },
-    ishi: {
-      type: DataTypes.STRING(250),
-      allowNull: false,
-    },
-    izoh: {
-      type: DataTypes.STRING(250),
-      allowNull: false,
-    },
-    depo_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    }
-  }, {
-    sequelize,
-    modelName: 'Metrology_sklad',
-    timestamps: true
-  });
-  return Metrology_sklad;
-};
+}, {
+  timestamps: true
+});
+
+const MetrologySklad = mongoose.model('MetrologySklad', metrologySkladSchema);
+
+module.exports = MetrologySklad;
