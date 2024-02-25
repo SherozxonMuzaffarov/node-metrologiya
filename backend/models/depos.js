@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const User = require('./users') 
+const Region = require('./regions') 
 
 const depoSchema = new mongoose.Schema({
   name: {

@@ -57,7 +57,7 @@
             </div>
           </BCollapse>
   
-          <!-- Kirim Chiqim Section -->
+          <!-- Shablonlar Section -->
           <BButton v-b-toggle="'collapse-1'" class="mt-2" variant="primary w-100">
             <i class="bi bi-box"></i> Shablonlar
           </BButton>
@@ -65,14 +65,14 @@
           <!-- Collapse Element for Kirim Chiqim Section -->
           <BCollapse id="collapse-1" class="mt-1">
             <div class="card p-1">
-              <!-- Kirim Link -->
+              <!-- Sexdagi Link -->
               <BButton variant="outline-link m-0" @click="click">
                 <router-link to="/metrology" class="text-decoration-none w-100">
                   Sexdagi shablonlar
                 </router-link>
               </BButton>
   
-              <!-- Chiqim Link -->
+              <!-- Skladdagi Link -->
               <BButton variant="outline-link m-0" @click="click">
                 <router-link to="/metrology-sklad" class="text-decoration-none w-100">
                   Yangi shablonlar

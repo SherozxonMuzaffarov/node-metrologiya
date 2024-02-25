@@ -2,6 +2,8 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../models/users')
+const { validateMongoDbId } = require('../../utils/validateMongoDBId');
+
 
 module.exports = {
   register: async (req, res) => {
@@ -59,11 +61,7 @@ module.exports = {
 
   getAll: async (req, res) => {
     try {
-      let model = await User.find().populate({
-        path: 'depo',
-        model: 'Depo',
-        select: ['id', 'name'],
-      });
+      let model = await User.find({}).populate('depo_id', 'name');
       res.send(model);
     } catch (error) {
       console.error(error);

@@ -1,13 +1,9 @@
-const { Region, Depo } = require("../../models");
+const Region = require("../../models/regions");
 
 module.exports = {
     getAll: async (req, res) => {
       try {
-        let model = await RegionModel.find().populate({
-          path: 'depos',
-          model: 'Depo',
-          select: ['id', 'name'],
-        });
+        let model = await Region.find({})
         res.send(model);
       } catch (error) {
         console.error(error);
@@ -17,7 +13,7 @@ module.exports = {
   
     getOne: async (req, res) => {
       try {
-        let model = await RegionModel.findById(req.params.id);
+        let model = await Region.findById(req.params.id);
   
         if (!model) {
           res.status(404).json({
@@ -36,7 +32,7 @@ module.exports = {
       try {
         let { name } = req.body;
   
-        let model = await RegionModel.create({ name });
+        let model = await Region.create({ name });
   
         res.json(model);
       } catch (error) {
@@ -51,7 +47,7 @@ module.exports = {
   
         const { name } = req.body;
   
-        const updatedModel = await RegionModel.findByIdAndUpdate(
+        const updatedModel = await Region.findByIdAndUpdate(
           id,
           { name },
           { new: true }
@@ -72,7 +68,7 @@ module.exports = {
       try {
         const { id } = req.params;
   
-        const deletedRowCount = await RegionModel.findByIdAndDelete(id);
+        const deletedRowCount = await Region.findByIdAndDelete(id);
   
         if (!deletedRowCount) {
           return res.status(404).json({ message: 'Region not found' });

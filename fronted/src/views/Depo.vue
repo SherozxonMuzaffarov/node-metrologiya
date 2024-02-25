@@ -133,15 +133,15 @@
                 <BTh class="btns"></BTh>
             </BThead>
             <BTbody>
-                <BTr v-for="item in Data" :key="item.id">
-                    <BTh class="id-tr">{{ item.id }}</BTh>
+                <BTr v-for="(item, index) in Data" :key="item._id">
+                    <BTh class="id-tr">{{ index + 1 }}</BTh>
                     <BTd>{{ item.name }}</BTd>
-                    <BTd>{{ item?.boss?.name }}</BTd>
-                    <BTd>{{ item?.sklad_xodim?.name }}</BTd>
-                    <BTd>{{ item?.region?.name }}</BTd>
+                    <BTd>{{ item?.depo_boss_id?.name }}</BTd>
+                    <BTd>{{ item?.depo_sklad_xodim_id?.name }}</BTd>
+                    <BTd>{{ item?.region_id?.name }}</BTd>
                     <BTd class="btns">
                         <button
-                            @click="getOne(item.id)"
+                            @click="getOne(item._id)"
                             class="btn btn-primary m-0"
                         >
                             <i class="bi bi-pen-fill"></i>
@@ -149,7 +149,7 @@
                     </BTd>
                     <BTd class="btns">
                         <button
-                            @click="deleteItem(item.id)"
+                            @click="deleteItem(item._id)"
                             class="btn btn-danger m-0"
                         >
                             <i class="bi bi-trash-fill"></i>
@@ -158,7 +158,7 @@
                 </BTr>
             </BTbody>
         </BTableSimple>
-        <!-- Table -->
+        <!-- Table --> 
     </div>
 </template>
 
@@ -170,7 +170,7 @@ const modalUpdate = ref(false);
 const Data = ref([]);
 
 const FormData = ref({
-    id: null,
+    _id: null,
     name: null, 
     region_id: null, 
     depo_boss_id: null,
@@ -200,7 +200,7 @@ const handleOk = async () => {
 
 // update
 const handleUpdate = async () => {
-    let id = FormData.value.id;
+    let id = FormData.value._id;
     try {
         let res = await axios.patch("/depo/update/" + id, FormData.value);
         if (res) {
@@ -269,8 +269,8 @@ let getAllRegions = async () => {
     try {
         let res = await axios.get("/region/all");
         if (res.data) {
-            regions = res.data.map(function (measure) {
-                return { text: measure.name, value: measure.id };
+            regions = res.data.map(function (region) {
+                return { text: region.name, value: region._id };
             });
         }
     } catch (error) {
@@ -284,7 +284,7 @@ let getAllUsers = async () => {
         let res = await axios.get("/user/all");
         if (res.data) {
             users = res.data.map(function (user) {
-                return { text: user.name, value: user.id };
+                return { text: user.name, value: user._id };
             });
         }
     } catch (error) {

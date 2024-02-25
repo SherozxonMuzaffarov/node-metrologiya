@@ -15,16 +15,16 @@ app.use(cookieParser());
 
 //Import and use routes
 const authRoutes = require('./src/routes/authRoutes')
-// const depoRoutes = require('./src/routes/depoRoutes')
-// const regionRoutes = require('./src/routes/regionRoutes')
-// const userRoutes = require('./src/routes/userRoutes')
+const userRoutes = require('./src/routes/userRoutes')
+const depoRoutes = require('./src/routes/depoRoutes')
+const regionRoutes = require('./src/routes/regionRoutes')
 // const metrologyRoutes = require('./src/routes/metrologyRoute')
 
 
 app.use('/auth', authRoutes)
-// app.use('/depo', depoRoutes)
-// app.use('/region', regionRoutes)
-// app.use('/user', userRoutes)
+app.use('/user', userRoutes)
+app.use('/depo', depoRoutes)
+app.use('/region', regionRoutes)
 // app.use('/metrologiya', metrologyRoutes)
 
 app.use((req, res, next) => {

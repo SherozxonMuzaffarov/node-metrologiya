@@ -17,7 +17,8 @@ const userSchema = new mongoose.Schema({
   },
   depo_id: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Depo'
+    ref: 'Depo',
+    default: null
   },
   role: {
     type: String,
