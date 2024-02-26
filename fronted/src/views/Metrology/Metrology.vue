@@ -54,7 +54,7 @@
           <BTd>{{ item.serKeyingiSanasi }}</BTd>
           <BTd>{{ item.serDavriyligi }}</BTd>
           <BTd>{{ item.shartnomaRaqamiSanasi }}</BTd>
-          <BTd>{{ item.depoNomi }}</BTd>
+          <BTd>{{ item.depo_id.name }}</BTd>
           <BTd>{{ item.izoh }}</BTd>
           <BTd class="btns">
             <button

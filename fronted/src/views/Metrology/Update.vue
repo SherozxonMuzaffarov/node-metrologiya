@@ -139,7 +139,7 @@
             <div class="form-group col">
               <label for="sel1">Depo nomi</label>
               <select v-model="formData.depo_id" class="form-control" id="sel1">
-                <option v-for="depo in depos" :key="depo.id" :value="depo.id">
+                <option v-for="depo in depos" :key="depo._id" :value="depo._id">
                   {{ depo.name }}
                 </option>
               </select>
@@ -176,8 +176,9 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const route = useRoute();
+const router = useRouter();
 
 let depos = ref([]);
 const formData = ref({
@@ -201,9 +202,29 @@ const formData = ref({
 
 const handleUpdate = async () => {
   try {
-    const response = await axios.put(`/metrolog/update/${_id.value}`, formData);
+    const response = await axios.put('/metrologiya/update/' + route.params.id,formData.value);
     if (response.data) {
       alert("Yangilandi");
+      // Reset form data after successful submission if needed
+      formData.value = {
+        nomi: "",
+        soni: 0,
+        ishlabChiqarilganYili: 2022,
+        raqami: "",
+        turi: "",
+        ishi: "",
+        saqlanishJoyi: "",
+        serRaqamiSanasi: "",
+        serBerganKorxona: "",
+        sarflanganMablag: 0,
+        serKeyingiSanasi: "",
+        serDavriyligi: 0,
+        shartnomaRaqamiSanasi: "",
+        depo_id: null,
+        izoh: "",
+      };
+       // Redirect to the '/metrologiya' URL
+      router.push('/metrology');
     }
   } catch (error) {
     console.error(error);
@@ -214,10 +235,9 @@ const handleUpdate = async () => {
 const getMetrologyData = async () => {
   try {
     // Fetch the metrology data by ID and populate the form
-    const response = (await axios.get(`/metrologiya/one/`)) + route.params.id;
-    if (response.data) {
-      console.log(response.data);
-      formData.value = response.data;
+    const res = await axios.get("/metrologiya/one/" + route.params.id);
+    if (res.data) {
+      formData.value = res.data;
     }
   } catch (error) {
     console.error(error);

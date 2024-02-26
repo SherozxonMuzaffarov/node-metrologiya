@@ -139,7 +139,7 @@
             <div class="form-group col">
               <label for="sel1">Depo nomi</label>
               <select v-model="formData.depo_id" class="form-control" id="sel1">
-                <option v-for="depo in depos" :key="depo.id" :value="depo.id">
+                <option v-for="depo in depos" :key="depo._id" :value="depo._id">
                   {{ depo.name }}
                 </option>
               </select>
@@ -196,7 +196,7 @@ const formData = ref({
 
 const handleSubmit = async () => {
   try {
-    const response = await axios.post("/metrolog/create", formData.value);
+    const response = await axios.post("/metrologiya/create", formData.value);
     if (response.data) {
       alert("Saqlandi");
       // Reset form data after successful submission if needed

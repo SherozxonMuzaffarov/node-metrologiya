@@ -31,17 +31,7 @@ const router = createRouter({
                 {
                     path: "/metrology-sklad",
                     name: "/metrology-sklad",
-                    component: () => import("../views/MetrologySklad/MetrologySklad.vue"),
-                },
-                {
-                    path: "/metrology-sklad/create",
-                    name: "/metrology-sklad/create",
-                    component: () => import("../views/MetrologySklad/Create.vue"),
-                },
-                {
-                    path: "/metrology-sklad/update/:id",
-                    name: "/metrology-sklad/update",
-                    component: () => import("../views/MetrologySklad/Update.vue"),
+                    component: () => import("../views/MetrologySklad.vue"),
                 },
                 {
                     path: "/user",

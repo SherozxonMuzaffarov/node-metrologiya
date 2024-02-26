@@ -19,6 +19,7 @@ const userRoutes = require('./src/routes/userRoutes')
 const depoRoutes = require('./src/routes/depoRoutes')
 const regionRoutes = require('./src/routes/regionRoutes')
 const metrologyRoutes = require('./src/routes/metrologyRoute')
+const metrologySkladRoutes = require('./src/routes/metrologySkladRoute')
 
 
 app.use('/auth', authRoutes)
@@ -26,6 +27,7 @@ app.use('/user', userRoutes)
 app.use('/depo', depoRoutes)
 app.use('/region', regionRoutes)
 app.use('/metrologiya', metrologyRoutes)
+app.use('/metrologiya-sklad', metrologySkladRoutes)
 
 app.use((req, res, next) => {
   res.setHeader(

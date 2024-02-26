@@ -2,8 +2,16 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../models/users')
-const { validateMongoDbId } = require('../../utils/validateMongoDBId');
-
+const redis = require('redis')
+let redisClient;
+(async() => {
+  redisClient = redis.createClient({
+    host: '127.0.0.1',
+    port: 6379,
+  })
+  redisClient.on('error', (error) => console.log('redis error' + error))
+  await redisClient.connect()
+})()
 
 module.exports = {
   register: async (req, res) => {
@@ -37,6 +45,8 @@ module.exports = {
 
       // Find user by phone_number
       const user = await User.findOne({ phone_number });
+
+      await redisClient.set('userData', JSON.stringify(user))
 
       if (!user) {
         return res.status(400).json({ message: 'Invalid phone_number or password.' });

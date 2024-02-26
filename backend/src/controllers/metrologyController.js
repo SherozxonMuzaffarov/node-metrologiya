@@ -3,7 +3,7 @@ const Metrology = require('../../models/metrology');
 module.exports = {
     getAll: async (req, res) => {
         try {
-            let model = await Metrology.find({});
+            let model = await Metrology.find({}).populate('depo_id', 'name');
             res.send(model);
         } catch (error) {
             console.error(error);
@@ -14,12 +14,10 @@ module.exports = {
     getOne: async (req, res) => {
         try {
             let model = await Metrology.findById( req.params.id );
-            res.send(model);
             if (!model) {
                 res.status(404).json({ message: `${req.params.id} id record not found` });
             }
-
-            console.log("model " + model);
+            res.send(model);
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal Server Error' });
@@ -40,9 +38,9 @@ module.exports = {
         try {
             const { id } = req.params;
 
-            const updatedModel = await Metrology.findOneAndUpdate(
-                { _id: id },
-                { $set: req.body },
+            const updatedModel = await Metrology.findByIdAndUpdate(
+                id,
+                req.body,
                 { new: true }
             );
 

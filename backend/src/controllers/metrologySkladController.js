@@ -1,88 +1,98 @@
-const { Metrology_sklad } = require('../../models')
+const MetrologySklad = require('../../models/metrologySklad');
 
 module.exports = {
-    getAll: async(req, res) => {
+    getAll: async (req, res) => {
         try {
-            let model = await Metrology_sklad.findAll({});
-            res.send(model);
+            let models = await MetrologySklad.find({}).populate('depo_id', 'name');
+            res.send(models);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ name: 'Internal Server Error'})
+            res.status(500).json({ name: 'Internal Server Error' });
         }
     },
 
     getOne: async (req, res) => {
         try {
-            let model = await Metrology_sklad.findOne({
-                where: {
-                    id: req.params.id,
-                }
-            })
+            let model = await MetrologySklad.findById(req.params.id);
 
             if (!model) {
-                res.status(404).json({ message: `${req.params.id} id record not found`});
+                return res.status(404).json({ message: `${req.params.id} id record not found` });
             }
 
-            res.send(model)
+            res.send(model);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Internal Server Error'})
+            res.status(500).json({ message: 'Internal Server Error' });
         }
     },
 
-    create: async(req, res) => {
+    create: async (req, res) => {
         try {
-            let { name } = req.body;
+            let { nomi, soni, ishlabChiqarilganYili, raqami, turi, ishi, izoh, depo_id } = req.body;
 
-            let model = await Metrology_sklad.create({ name });
-            
+            let model = await MetrologySklad.create({
+                nomi,
+                soni,
+                ishlabChiqarilganYili,
+                raqami,
+                turi,
+                ishi,
+                izoh,
+                depo_id,
+            });
+
             res.json(model);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Internal Server Error'})
+            res.status(500).json({ message: 'Internal Server Error' });
         }
     },
 
     update: async (req, res) => {
         try {
             const { id } = req.params;
+            const { nomi, soni, ishlabChiqarilganYili, raqami, turi, ishi, izoh, depo_id } = req.body;
             
-            const { name } = req.body;
-
-            const [ updatedRow ] = await Metrology_sklad.update(
-                { name },
+            let updatedModel = await MetrologySklad.findByIdAndUpdate(
+                id,
                 {
-                    where: { id },
-                }
+                    nomi,
+                    soni,
+                    ishlabChiqarilganYili,
+                    raqami,
+                    turi,
+                    ishi,
+                    izoh,
+                    depo_id,
+                },
+                { new: true }
             );
-            if (updatedRow === 0) {
-                return res.status(404).json({ message: 'Metrology_sklad not found'})
+
+            if (!updatedModel) {
+                return res.status(404).json({ message: 'MetrologySklad not found' });
             }
 
-            const updatedModel = await Metrology_sklad.findOne({ where: { id }});
-            
             res.send(updatedModel);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Internal Server Error'})
+            res.status(500).json({ message: 'Internal Server Error' });
         }
     },
 
     delete: async (req, res) => {
         try {
             const { id } = req.params;
-            
-            const deletedRowCount = await Metrology_sklad.destroy({ where : { id }});
-            
-            if (deletedRowCount === 0) {
-                return res.status(404).json({ message: 'Metrology_sklad not found'})
+
+            let deletedModel = await MetrologySklad.findByIdAndDelete(id);
+
+            if (!deletedModel) {
+                return res.status(404).json({ message: 'MetrologySklad not found' });
             }
 
-            res.json(deletedRowCount)
+            res.json(deletedModel);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: 'Internal Server Error'})
+            res.status(500).json({ message: 'Internal Server Error' });
         }
-    }
-}
-
+    },
+};

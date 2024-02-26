@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const authMiddleware = require("../middlewares/authMiddleware");
-const measureController = require("../controllers/measureController");
+const metrologySkladController = require("../controllers/metrologySkladController");
 const validations = require("../validators/universalValidator");
 
-router.get('/all', authMiddleware, measureController.getAll)
-router.get('/one/:id', authMiddleware, measureController.getOne)
-router.post('/create', authMiddleware, validations.validate, measureController.create)
-router.patch('/update/:id', authMiddleware, validations.validate, measureController.update)
-router.delete('/delete/:id', authMiddleware, measureController.delete)
+router.get('/all', authMiddleware, metrologySkladController.getAll)
+router.get('/one/:id', authMiddleware, metrologySkladController.getOne)
+router.post('/create', authMiddleware, validations.validate, metrologySkladController.create)
+router.patch('/update/:id', authMiddleware, validations.validate, metrologySkladController.update)
+router.delete('/delete/:id', authMiddleware, metrologySkladController.delete)
 
 module.exports = router;
  
