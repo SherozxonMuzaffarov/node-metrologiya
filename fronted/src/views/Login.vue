@@ -46,7 +46,8 @@ const submit = async () => {
         let res = await axios.post("/auth/login", formData.value);
         if (res.data.token) {
             localStorage.setItem("token", res.data.token);
-            router.push({ path: "/" });
+            localStorage.setItem("userData",JSON.stringify(res.data.user));
+            router.push({ path: "/metrology" });
         }
     } catch (error) {
         console.log(error);

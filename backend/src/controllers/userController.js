@@ -54,7 +54,7 @@ module.exports = {
 
       myCache.set('userData', user);
       
-      res.json({ token });
+      res.json({ token, user });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: 'Internal Server Error' });
@@ -64,8 +64,6 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       let model = await User.find({}).populate('depo_id', 'name');
-      const cachedUser = myCache.get("userData");
-      console.log("cachedUser: " + cachedUser);
       res.send(model);
     } catch (error) {
       console.error(error);

@@ -4,10 +4,14 @@ const myCache = require('../../utils/nodeCache')
 module.exports = {
     getAll: async (req, res) => {
         try {
-            let models = await MetrologySklad.find({}).populate('depo_id', 'name');
-            const cachedUser = myCache.get("userData");
-            console.log("cachedUser: " + cachedUser);
-            res.send(models);
+            const user = myCache.get("userData");
+            if (user.role == 'Admin') {
+                let models = await MetrologySklad.find({}).populate('depo_id', 'name');
+                res.send(models);
+            } else {
+                let models = await MetrologySklad.where('depo_id').equals(user.depo_id).populate('depo_id', 'name')
+                res.send(models);
+            }
         } catch (error) {
             console.error(error);
             res.status(500).json({ name: 'Internal Server Error' });

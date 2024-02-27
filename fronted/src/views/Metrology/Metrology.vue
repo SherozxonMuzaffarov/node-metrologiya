@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-5">
+  <div >
     <div class="d-flex align-items-center column-gap-2">
       <p class="lead m-0">
         <i class="bi bi-house-door-fill"></i>Sexdagi mavjud shablonlar
@@ -9,7 +9,7 @@
       </button>
     </div>
 
-    <BTableSimple striped="true" hover="true" bordered="true">
+    <BTableSimple striped="true" hover="true" bordered="true" class="mt-4">
       <BThead>
         <BTr>
           <BTh rowspan="3">№</BTh>

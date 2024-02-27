@@ -10,12 +10,12 @@
         <!-- Sidebar Content -->
         <div class="sidebar-content">
           <!-- Home Button -->
-          <BButton to="/" variant="primary w-100" @click="click">
+          <BButton to="/" variant="primary w-100" @click="click" :disabled="userData.role == 'User'">
             <i class="bi bi-house-door"></i> Bosh sahifa
           </BButton>
   
           <!-- Malumotlar Section -->
-          <BButton v-b-toggle="'collapse-2'" class="mt-2" variant="primary w-100">
+          <BButton v-b-toggle="'collapse-2'" class="mt-2" variant="primary w-100" :disabled="userData.role == 'User'">
             <i class="bi bi-info-circle"></i> Malumotlar
           </BButton>
   
@@ -100,18 +100,15 @@
   const show = ref(false);
   const router = useRouter();
   
-  // Assuming you have userData defined somewhere
-  const userData = ref({
-    value: null,
-  });
+  const userData = ref({});
 
-  // Retrieve userData.value from localStorage
   const storedUserData = localStorage.getItem("userData");
-  
-  // Check if there is data in localStorage
-  if (storedUserData) {
-    // Parse the JSON string from localStorage and assign it to userData.value
-    userData.value = JSON.parse(storedUserData);
+  try {
+    if (storedUserData) {
+      userData.value = JSON.parse(storedUserData);
+    }
+  } catch (error) {
+    console.error("Error parsing JSON:", error);
   }
   
   const click = () => {

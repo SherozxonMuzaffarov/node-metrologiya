@@ -1,10 +1,17 @@
 const Metrology = require('../../models/metrology');
+const myCache = require('../../utils/nodeCache')
 
 module.exports = {
     getAll: async (req, res) => {
         try {
-            let model = await Metrology.find({}).populate('depo_id', 'name');
-            res.send(model);
+            const user = myCache.get('userData')
+            if (user.role == 'Admin') {
+                let model = await Metrology.find({}).populate('depo_id', 'name');
+                res.send(model);
+            } else {
+                let model = await Metrology.where('depo_id').equals(user.depo_id).populate('depo_id', 'name');
+                res.send(model);
+            }
         } catch (error) {
             console.error(error);
             res.status(500).json({ message: 'Internal Server Error' });
