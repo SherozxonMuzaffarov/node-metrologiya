@@ -2,16 +2,8 @@ require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../../models/users')
-const redis = require('redis')
-let redisClient;
-(async() => {
-  redisClient = redis.createClient({
-    host: '127.0.0.1',
-    port: 6379,
-  })
-  redisClient.on('error', (error) => console.log('redis error' + error))
-  await redisClient.connect()
-})()
+const myCache = require('../../utils/nodeCache')
+
 
 module.exports = {
   register: async (req, res) => {
@@ -46,8 +38,6 @@ module.exports = {
       // Find user by phone_number
       const user = await User.findOne({ phone_number });
 
-      await redisClient.set('userData', JSON.stringify(user))
-
       if (!user) {
         return res.status(400).json({ message: 'Invalid phone_number or password.' });
       }
@@ -62,6 +52,8 @@ module.exports = {
       // Generate JWT token
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
 
+      myCache.set('userData', user);
+      
       res.json({ token });
     } catch (error) {
       console.error(error);
@@ -72,6 +64,8 @@ module.exports = {
   getAll: async (req, res) => {
     try {
       let model = await User.find({}).populate('depo_id', 'name');
+      const cachedUser = myCache.get("userData");
+      console.log("cachedUser: " + cachedUser);
       res.send(model);
     } catch (error) {
       console.error(error);

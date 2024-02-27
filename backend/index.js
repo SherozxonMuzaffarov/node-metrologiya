@@ -3,14 +3,15 @@ const express = require("express");
 const dbConnect = require('./config/db')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const cache = require('./utils/nodeCache')
 
 const app = express();
+
 dbConnect()
 app.use(cors({ origin: '*', methods: 'GET, PUT, PATCH, POST, DELETE' }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
-
 
 
 //Import and use routes
@@ -39,9 +40,6 @@ app.use((req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
   
-
-
-
  app.listen(PORT, async () => {
    console.log(`Server is running on port ${PORT}`);
  });

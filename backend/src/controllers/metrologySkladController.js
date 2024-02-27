@@ -1,9 +1,12 @@
 const MetrologySklad = require('../../models/metrologySklad');
+const myCache = require('../../utils/nodeCache')
 
 module.exports = {
     getAll: async (req, res) => {
         try {
             let models = await MetrologySklad.find({}).populate('depo_id', 'name');
+            const cachedUser = myCache.get("userData");
+            console.log("cachedUser: " + cachedUser);
             res.send(models);
         } catch (error) {
             console.error(error);
