@@ -3,7 +3,6 @@ const express = require("express");
 const dbConnect = require('./config/db')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-const cache = require('./utils/nodeCache')
 
 const app = express();
 
