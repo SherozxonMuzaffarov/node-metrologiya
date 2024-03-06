@@ -5,7 +5,7 @@ module.exports = {
     getAll: async (req, res) => {
         try {
             const user = myCache.get("userData");
-            if (user.role == 'Admin') {
+            if (user?.role == 'Admin') {
                 let models = await MetrologySklad.find({}).populate('depo_id', 'name');
                 res.send(models);
             } else {
