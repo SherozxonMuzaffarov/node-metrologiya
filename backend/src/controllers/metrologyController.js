@@ -9,7 +9,7 @@ module.exports = {
                 let model = await Metrology.find({}).populate('depo_id', 'name');
                 res.send(model);
             } else {
-                let model = await Metrology.where('depo_id').equals(user.depo_id).populate('depo_id', 'name');
+                let model = await Metrology.where('depo_id').equals(user?.depo_id).populate('depo_id', 'name');
                 res.send(model);
             }
         } catch (error) {
