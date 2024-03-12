@@ -63,8 +63,6 @@
             >
               <i class="bi bi-pen-fill"></i>
             </button>
-          </BTd>
-          <BTd class="btns">
             <button @click="deleteItem(item._id)" class="btn btn-danger m-0">
               <i class="bi bi-trash-fill"></i>
             </button>
@@ -98,9 +96,11 @@ const deleteItem = async (id) => {
   const confirmDelete = confirm("Tasdiqlaysizmi?");
   if (confirmDelete) {
     try {
-      let res = await axios.delete("/metrology/delete/" + id);
-      alert("Ma'lumot o'chirildi");
-      getAll();
+      let res = await axios.delete("/metrologiya/delete/" + id);
+      if(res.data){
+        alert("Ma'lumot o'chirildi");
+        getAll();
+      }
     } catch (error) {
       console.error(error);
     }

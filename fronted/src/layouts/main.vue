@@ -9,10 +9,6 @@
       <BOffcanvas v-model="show">
         <!-- Sidebar Content -->
         <div class="sidebar-content">
-          <!-- Home Button -->
-          <BButton to="/" variant="primary w-100" @click="click" :disabled="userData.role == 'User'">
-            <i class="bi bi-house-door"></i> Bosh sahifa
-          </BButton>
   
           <!-- Malumotlar Section -->
           <BButton v-b-toggle="'collapse-2'" class="mt-2" variant="primary w-100" :disabled="userData.role == 'User'">
