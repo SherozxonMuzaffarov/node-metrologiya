@@ -96,7 +96,7 @@ const deleteItem = async (id) => {
   const confirmDelete = confirm("Tasdiqlaysizmi?");
   if (confirmDelete) {
     try {
-      let res = await axios.delete("/metrologiya/delete/" + id);
+      let res = await axios.delete("/metrologiya/delete/"+id);
       if(res.data){
         alert("Ma'lumot o'chirildi");
         getAll();
