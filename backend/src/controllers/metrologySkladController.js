@@ -9,7 +9,7 @@ module.exports = {
                 let models = await MetrologySklad.find({}).populate('depo_id', 'name');
                 res.send(models);
             } else {
-                let models = await MetrologySklad.where('depo_id').equals(user.depo_id).populate('depo_id', 'name')
+                let models = await MetrologySklad.where('depo_id').equals(user?.depo_id).populate('depo_id', 'name')
                 res.send(models);
             }
         } catch (error) {
@@ -45,7 +45,7 @@ module.exports = {
                 turi,
                 ishi,
                 izoh,
-                depo_id,
+                depo_id
             });
 
             res.json(model);

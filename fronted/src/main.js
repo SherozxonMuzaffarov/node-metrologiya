@@ -12,7 +12,7 @@ import router from "./router";
 import { useErrorStorage } from "./stores/error";
 import axios from "axios";
 
-let BASE_URL = "http://localhost:3000";
+let BASE_URL = "http://127.0.0.1:3000";
 
 const app = createApp(App);
 app.use(createPinia());
