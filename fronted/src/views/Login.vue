@@ -3,7 +3,7 @@
         <img class="logo" src="../assets/images/logo.jpg" alt="" />
         <form @submit.prevent="submit" class="card shadow shadow-lg">
             <div class="card-body">
-                <h3 class="text-center">E-OMBOR LOGIN</h3>
+                <h3 class="text-center">E-METROLOGIYA LOGIN</h3>
                 <div class="mb-3">
                     <label class="form-label">Telefon raqam</label>
                     <input
